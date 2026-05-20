@@ -1,6 +1,8 @@
 using WebEmployeeManagement.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using WebEmployeeManagement.Applications.Interfaces;
+using WebEmployeeManagement.Infrastructures.Entities;
 
 
 namespace WebEmployeeManagement.Controllers
