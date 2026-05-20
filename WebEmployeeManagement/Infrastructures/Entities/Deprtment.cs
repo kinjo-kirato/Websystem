@@ -8,7 +8,7 @@ namespace WebEmployeeManagement.Infrastructures.Entities
 
         [Required(ErrorMessage = "部門名を入力してください。")]
         [Display(Name = "部門名")]
-        public string DepartmentName { get; set; } = string.Empty
+        public string DepartmentName { get; set; } = string.Empty;
 
     }
 }

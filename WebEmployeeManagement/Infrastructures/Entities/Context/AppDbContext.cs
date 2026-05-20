@@ -1,3 +1,5 @@
+using WebEmployeeManagement.Infrastructures.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace WebEmployeeManagement.Infrastructures.Context
