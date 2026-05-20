@@ -1,60 +1,19 @@
-using WebEmployeeManagement.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using WebEmployeeManagement.Applications.Interfaces;
-using WebEmployeeManagement.Infrastructures.Entities;
+using EmployeeList.Models;
 
+namespace EmployeeList.Controllers;
 
-namespace WebEmployeeManagement.Controllers
+public class EmployeesController : Controller
 {
-    public class EmployeeController : Controller
+    public IActionResult Index()
     {
-        private readonly IEmployeeService _employeeService;
-
-        public EmployeeController(IEmployeeService employeeService)
+        var employeeList = new List<Employee>
         {
-            _employeeService = employeeService;
-        }
+            new Employee { EmployeeId = 1, EmployeeName = "山田太郎", DepartmentId = 10 },
+            new Employee { EmployeeId = 2, EmployeeName = "佐藤花子", DepartmentId = 20 }
+        };
 
-        public async Task<IActionResult> Index()
-        {
-            var employees = await _employeeService.GetAllEmployeesAsync();
-            return View(employees);
-        }
-
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var employee = await _employeeService.GetEmployeeByIdAsync(id.Value);
-            if (employee == null)
-            {
-                return NotFound();
-            }
-
-            return View(employee);
-        }
-
-
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Position,Department")] Employee employee)
-        {
-            if (ModelState.IsValid)
-            {
-                await _employeeService.AddEmployeeAsync(employee);
-                return RedirectToAction(nameof(Index));
-            }
-            return View(employee);
-        }
+        return View(employeeList);
     }
 }
     
