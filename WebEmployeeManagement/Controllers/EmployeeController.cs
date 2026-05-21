@@ -22,6 +22,7 @@ public class EmployeesController : Controller
     {
         return View();
     }
+        [HttpPost]
     public IActionResult Create(Employee employee)
     {
         if (ModelState.IsValid)
