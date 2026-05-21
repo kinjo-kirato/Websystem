@@ -18,5 +18,9 @@ public class EmployeesController : Controller
 
         return View(employeeList);
     }
+    public IActionResult Create()
+    {
+        return View();
+    }
 }
     

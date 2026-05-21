@@ -18,4 +18,8 @@ public class DepartmentsController : Controller
 
         return View(departmentList);
     }
+    public IActionResult Create()
+    {
+        return View();
+    }
 }

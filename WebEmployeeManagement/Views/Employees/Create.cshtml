@@ -1,9 +1,9 @@
-@model DepartmentList.Models.Department
+@model EmployeeList.Models.Employee
 @{
-    ViewData["Title"] = "部署追加";
+    ViewData["Title"] = "社員追加";
 }
 
-<h2>部署追加</h2>
+<h2>社員追加</h2>
 
 @if (ViewBag.ErrorMessage != null)
 {
@@ -16,12 +16,12 @@
         <input asp-for="DepartmentId" />
     </div>
     <div>
-        <label>部署名</label>
-        <input asp-for="DepartmentName" />
+        <label>社員名</label>
+        <input asp-for="EmployeeName" />
     </div>
     <div class="button-area">
         <button type="submit" class="btn btn-primary">追加</button>
     </div>
 </form>
 
-<p><a asp-controller="Departments" asp-action="Index">部署一覧へ戻る</a></p>
+<p><a asp-controller="Employees" asp-action="Index">社員一覧へ戻る</a></p>
