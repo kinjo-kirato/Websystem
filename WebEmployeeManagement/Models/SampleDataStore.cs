@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DepartmentList.Models;
-using EmployeeList.Models;
+using WebEmployeeManagement.Infrastructures.Entities;
 namespace DepartmentList.Models;
 
 public static class SampleDataStore

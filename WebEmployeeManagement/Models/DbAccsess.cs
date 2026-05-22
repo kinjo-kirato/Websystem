@@ -1,7 +1,8 @@
 using WebEmployeeManagement.Infrastructures.Context;
 using WebEmployeeManagement.Models;
-using EmployeeList.Models;
-using DepartmentList.Models;
+using WebEmployeeManagement.Infrastructures.Entities;
+using WebEmployeeManagement.Applications.Services;
+using Microsoft.AspNetCore.Identity;
 using EmployeeContext = WebEmployeeManagement.Infrastructures.Context.AppDbContext;
 using Npgsql;
 namespace WebEmployeeManagement.Models;

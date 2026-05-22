@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
-using EmployeeList.Models;
+using WebEmployeeManagement.Applications.Services;
+using WebEmployeeManagement.Infrastructures.Entities;
+using WebEmployeeManagement.Infrastructures.Context;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-namespace EmployeeList.Controllers;
+namespace WebEmployeeManagement.Controllers;
 
 public class EmployeesController : Controller
 {

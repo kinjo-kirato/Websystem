@@ -1,24 +1,26 @@
 using Microsoft.AspNetCore.Mvc;
-using DepartmentList.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
+using WebEmployeeManagement.Infrastructures.Context;
+using WebEmployeeManagement.Infrastructures.Entities;
+using WebEmployeeManagement.Applications.Services;
 
-namespace DepartmentList.Controllers;
+namespace WebEmployeeManagement.Controllers;
 
 public class DepartmentsController : Controller
 {
-    
+    private readonly DepartmentService _context;
 
-        public IActionResult Index()
+    public DepartmentsController(DepartmentService context)
     {
-        var departmentList = new List<Department>
-        {
-            new Department { DepartmentId = 10, DepartmentName = "営業部" },
-            new Department { DepartmentId = 20, DepartmentName = "開発部" }
-        };
+        _context = context;
+    }
 
+    public IActionResult Index()
+    {
+        var departmentList = _context.GetAll();
         return View(departmentList);
     }
     public IActionResult Create()
@@ -29,6 +31,7 @@ public class DepartmentsController : Controller
     public IActionResult Create(Department department)
     {        if (ModelState.IsValid)
         {            
+            _context.Create(department);
             return RedirectToAction("Index");
         }
         return View(department);    

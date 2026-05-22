@@ -1,9 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
-using EmployeeList.Models;
+using System.Collections.Generic;
+using System.Linq;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EmployeeList.Controllers;
+namespace WebEmployeeManagement.Controllers;
 
 public class HomeController : Controller
 {
