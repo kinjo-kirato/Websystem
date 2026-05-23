@@ -11,10 +11,26 @@ public class DbAccsess
     private static readonly string ConnectionString =
         Environment.GetEnvironmentVariable("DB_CONNECTION_STRING")
         ?? "Host=localhost;Port=5432;Database=sql_training";
- public static void Initialize()
+
+    private static NpgsqlConnection CreateConnection()
     {
-        using var connection = new NpgsqlConnection(ConnectionString);
-        connection.Open();
+        try
+        {
+            var connection = new NpgsqlConnection(ConnectionString);
+            connection.Open();
+            return connection;
+        }
+        catch (PostgresException ex) when (ex.SqlState == "28000" && ex.MessageText.Contains("role \"postgres\" does not exist"))
+        {
+            var connection = new NpgsqlConnection("Host=localhost;Port=5432;Database=sql_training");
+            connection.Open();
+            return connection;
+        }
+    }
+
+    public static void Initialize()
+    {
+        using var connection = CreateConnection();
 
          var createDepartments = connection.CreateCommand();
         createDepartments.CommandText = @"
@@ -58,8 +74,7 @@ ON CONFLICT (employee_id) DO NOTHING;";
 
     public static List<Department> GetDepartments()
     {
-        using var connection = new NpgsqlConnection(ConnectionString);
-        connection.Open();
+        using var connection = CreateConnection();
 
         var command = connection.CreateCommand();
         command.CommandText = "SELECT department_id, department_name FROM departments ORDER BY department_id";
@@ -80,8 +95,7 @@ ON CONFLICT (employee_id) DO NOTHING;";
 
     public static List<Employee> GetEmployees()
     {
-        using var connection = new NpgsqlConnection(ConnectionString);
-        connection.Open();
+        using var connection = CreateConnection();
 
         var command = connection.CreateCommand();
         command.CommandText = "SELECT employee_id, employee_name, department_id FROM employees ORDER BY employee_id";
@@ -103,8 +117,7 @@ ON CONFLICT (employee_id) DO NOTHING;";
 
     public static bool ExistsEmployeeId(int employeeId)
     {
-        using var connection = new NpgsqlConnection(ConnectionString);
-        connection.Open();
+        using var connection = CreateConnection();
 
         var command = connection.CreateCommand();
         command.CommandText = "SELECT COUNT(1) FROM employees WHERE employee_id = @employeeId";
@@ -115,8 +128,7 @@ ON CONFLICT (employee_id) DO NOTHING;";
 
     public static bool ExistsDepartmentId(int departmentId)
     {
-        using var connection = new NpgsqlConnection(ConnectionString);
-        connection.Open();
+        using var connection = CreateConnection();
 
         var command = connection.CreateCommand();
         command.CommandText = "SELECT COUNT(1) FROM departments WHERE department_id = @departmentId";
@@ -127,8 +139,7 @@ ON CONFLICT (employee_id) DO NOTHING;";
 
     public static void AddEmployee(Employee employee)
     {
-        using var connection = new NpgsqlConnection(ConnectionString);
-        connection.Open();
+        using var connection = CreateConnection();
 
         var command = connection.CreateCommand();
         command.CommandText = @"
@@ -142,8 +153,7 @@ VALUES (@employeeId, @employeeName, @departmentId);";
 
     public static void AddDepartment(Department department)
     {
-        using var connection = new NpgsqlConnection(ConnectionString);
-        connection.Open();
+        using var connection = CreateConnection();
 
         var command = connection.CreateCommand();
         command.CommandText = @"
