@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using WebEmployeeManagement.Infrastructures.Entities;
-using WebEmployeeManagement.Models;
+using WebEmployeeManagement.Infrastructures.DataAccess;
 
-namespace WebEmployeeManagement.Controllers;
+namespace WebEmployeeManagement.Presentations.Controllers;
 
 public class DepartmentsController : Controller
 {
