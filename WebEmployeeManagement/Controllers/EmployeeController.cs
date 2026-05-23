@@ -1,38 +1,42 @@
 using Microsoft.AspNetCore.Mvc;
-using WebEmployeeManagement.Applications.Services;
 using WebEmployeeManagement.Infrastructures.Entities;
-using WebEmployeeManagement.Infrastructures.Context;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+using WebEmployeeManagement.Models;
+
 namespace WebEmployeeManagement.Controllers;
 
 public class EmployeesController : Controller
 {
     public IActionResult Index()
     {
-        var employeeList = new List<Employee>
-        {
-            new Employee { EmployeeId = 1, EmployeeName = "山田太郎", DepartmentId = 10 },
-            new Employee { EmployeeId = 2, EmployeeName = "佐藤花子", DepartmentId = 20 }
-        };
-
-        return View(employeeList);
+        return View(DbAccsess.GetEmployees());
     }
+
     public IActionResult Create()
     {
         return View();
     }
-        [HttpPost]
+
+    [HttpPost]
     public IActionResult Create(Employee employee)
     {
         if (ModelState.IsValid)
         {
-            
-            // データベースに保存する処理をここに追加
+            if (DbAccsess.ExistsEmployeeId(employee.EmployeeId))
+            {
+                ViewBag.ErrorMessage = "同じ社員IDが既に存在します。";
+                return View(employee);
+            }
+
+            if (!DbAccsess.ExistsDepartmentId(employee.DepartmentId))
+            {
+                ViewBag.ErrorMessage = "指定された部署IDは存在しません。";
+                return View(employee);
+            }
+
+            DbAccsess.AddEmployee(employee);
             return RedirectToAction("Index");
         }
+
         return View(employee);
     }
 }
