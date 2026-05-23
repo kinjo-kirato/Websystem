@@ -1,11 +1,7 @@
 using WebEmployeeManagement.Infrastructures.Context;
-using WebEmployeeManagement.Models;
 using WebEmployeeManagement.Infrastructures.Entities;
-using WebEmployeeManagement.Applications.Services;
-using Microsoft.AspNetCore.Identity;
-using EmployeeContext = WebEmployeeManagement.Infrastructures.Context.AppDbContext;
 using Npgsql;
-namespace WebEmployeeManagement.Models;
+namespace WebEmployeeManagement.Infrastructures.DataAccess;
 public class DbAccsess
 {
     private static readonly string ConnectionString =
