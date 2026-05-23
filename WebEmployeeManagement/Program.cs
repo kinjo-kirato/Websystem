@@ -1,8 +1,15 @@
+using WebEmployeeManagement.Applications.Interfaces;
 using WebEmployeeManagement.Infrastructures.DataAccess;
+using WebEmployeeManagement.Applications.Services;
+using WebEmployeeManagement.Infrastructures.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+builder.Services.AddScoped<IDepartmentService, DepartmentService>();
+builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 
 builder.Services.Configure<Microsoft.AspNetCore.Mvc.Razor.RazorViewEngineOptions>(options =>
 {
