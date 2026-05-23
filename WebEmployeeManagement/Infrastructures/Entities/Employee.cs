@@ -7,10 +7,6 @@ namespace WebEmployeeManagement.Infrastructures.Entities
     {
         public int EmployeeId { get; set; }
 
-        [Required(ErrorMessage = "社員番号を入力してください。")]
-        [Display(Name = "社員番号")]
-        public string EmployeeNumber { get; set; } = string.Empty;
-
         [Required(ErrorMessage = "社員名を入力してください。")]
         [Display(Name = "社員名")]
         public string EmployeeName { get; set; } = string.Empty;
