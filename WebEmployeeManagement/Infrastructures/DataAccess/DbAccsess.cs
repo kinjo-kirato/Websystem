@@ -94,7 +94,11 @@ ON CONFLICT (employee_id) DO NOTHING;";
         using var connection = CreateConnection();
 
         var command = connection.CreateCommand();
-        command.CommandText = "SELECT employee_id, employee_name, department_id FROM employees ORDER BY employee_id";
+        command.CommandText = @"
+SELECT e.employee_id, e.employee_name, e.department_id, d.department_name
+FROM employees e
+INNER JOIN departments d ON e.department_id = d.department_id
+ORDER BY e.employee_id";
 
         var list = new List<Employee>();
         using var reader = command.ExecuteReader();
@@ -104,7 +108,12 @@ ON CONFLICT (employee_id) DO NOTHING;";
             {
                 EmployeeId = reader.GetInt32(0),
                 EmployeeName = reader.GetString(1),
-                DepartmentId = reader.GetInt32(2)
+                DepartmentId = reader.GetInt32(2),
+                Department = new Department
+                {
+                    DepartmentId = reader.GetInt32(2),
+                    DepartmentName = reader.GetString(3)
+                }
             });
         }
 
