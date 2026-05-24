@@ -31,17 +31,17 @@ public class DbAccsess
          var createDepartments = connection.CreateCommand();
         createDepartments.CommandText = @"
 CREATE TABLE IF NOT EXISTS departments (
-    department_id INTEGER PRIMARY KEY,
-    department_name TEXT NOT NULL
+    department_id VARCHAR(4) PRIMARY KEY CHECK (department_id ~ '^[1-9][0-9]{0,3}$'),
+    department_name VARCHAR(50) NOT NULL
 );";
         createDepartments.ExecuteNonQuery();
 
         var createEmployees = connection.CreateCommand();
         createEmployees.CommandText = @"
 CREATE TABLE IF NOT EXISTS employees (
-    employee_id INTEGER PRIMARY KEY,
-    employee_name TEXT NOT NULL,
-    department_id INTEGER NOT NULL REFERENCES departments(department_id)
+    employee_id VARCHAR(4) PRIMARY KEY CHECK (employee_id ~ '^[1-9][0-9]{0,3}$'),
+    employee_name VARCHAR(50) NOT NULL,
+    department_id VARCHAR(4) NOT NULL CHECK (department_id ~ '^[1-9][0-9]{0,3}$') REFERENCES departments(department_id)
 );";
         createEmployees.ExecuteNonQuery();
 
