@@ -23,8 +23,10 @@
         <span asp-validation-for="EmployeeName" class="validation"></span>
     </div>
     <div class="form-group">
-        <label asp-for="DepartmentId">部署ID</label>
-        <input asp-for="DepartmentId" class="form-control" />
+        <label asp-for="DepartmentId">部署名</label>
+        <select asp-for="DepartmentId" asp-items="ViewBag.Departments" class="form-control">
+            <option value="">部署を選択してください</option>
+        </select>
         <span asp-validation-for="DepartmentId" class="validation"></span>
     </div>
     <div class="button-area">

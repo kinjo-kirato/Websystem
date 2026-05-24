@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using WebEmployeeManagement.Infrastructures.Entities;
 using WebEmployeeManagement.Infrastructures.DataAccess;
 
@@ -13,6 +14,7 @@ public class EmployeesController : Controller
 
     public IActionResult Create()
     {
+        SetDepartmentOptions();
         return View();
     }
 
@@ -24,12 +26,14 @@ public class EmployeesController : Controller
             if (DbAccsess.ExistsEmployeeId(employee.EmployeeId))
             {
                 ViewBag.ErrorMessage = "同じ社員IDが既に存在します。";
+                SetDepartmentOptions();
                 return View(employee);
             }
 
             if (!DbAccsess.ExistsDepartmentId(employee.DepartmentId))
             {
                 ViewBag.ErrorMessage = "指定された部署IDは存在しません。";
+                SetDepartmentOptions();
                 return View(employee);
             }
 
@@ -37,7 +41,19 @@ public class EmployeesController : Controller
             return RedirectToAction("Index");
         }
 
+        SetDepartmentOptions();
         return View(employee);
+    }
+
+    private void SetDepartmentOptions()
+    {
+        ViewBag.Departments = DbAccsess.GetDepartments()
+            .Select(department => new SelectListItem
+            {
+                Value = department.DepartmentId.ToString(),
+                Text = department.DepartmentName
+            })
+            .ToList();
     }
 }
     
