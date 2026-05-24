@@ -13,7 +13,7 @@
         <tr>
             <th>社員ID</th>
             <th>氏名</th>
-            <th>部署ID</th>
+            <th>部署名</th>
         </tr>
     </thead>
     <tbody>
@@ -22,7 +22,7 @@
         <tr>
             <td>@employee.EmployeeId</td>
             <td>@employee.EmployeeName</td>
-            <td>@employee.DepartmentId</td>
+            <td>@employee.Department?.DepartmentName</td>
         </tr>
     }
     </tbody>
