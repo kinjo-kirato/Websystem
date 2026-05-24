@@ -21,12 +21,6 @@ public class DepartmentsController : Controller
     {
         if (ModelState.IsValid)
         {
-            if (DbAccsess.ExistsDepartmentId(department.DepartmentId))
-            {
-                ViewBag.ErrorMessage = "同じ部署IDが既に存在します。";
-                return View(department);
-            }
-
             DbAccsess.AddDepartment(department);
             return RedirectToAction("Index");
         }
