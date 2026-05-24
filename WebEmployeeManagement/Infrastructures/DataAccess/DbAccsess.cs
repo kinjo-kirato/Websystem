@@ -31,7 +31,7 @@ public class DbAccsess
          var createDepartments = connection.CreateCommand();
         createDepartments.CommandText = @"
 CREATE TABLE IF NOT EXISTS departments (
-    department_id VARCHAR(4) PRIMARY KEY CHECK (department_id ~ '^[1-9][0-9]{0,3}$'),
+    department_id INTEGER PRIMARY KEY CHECK (department_id BETWEEN 1 AND 9999),
     department_name VARCHAR(50) NOT NULL
 );";
         createDepartments.ExecuteNonQuery();
@@ -39,9 +39,9 @@ CREATE TABLE IF NOT EXISTS departments (
         var createEmployees = connection.CreateCommand();
         createEmployees.CommandText = @"
 CREATE TABLE IF NOT EXISTS employees (
-    employee_id VARCHAR(4) PRIMARY KEY CHECK (employee_id ~ '^[1-9][0-9]{0,3}$'),
+    employee_id INTEGER PRIMARY KEY CHECK (employee_id BETWEEN 1 AND 9999),
     employee_name VARCHAR(50) NOT NULL,
-    department_id VARCHAR(4) NOT NULL CHECK (department_id ~ '^[1-9][0-9]{0,3}$') REFERENCES departments(department_id)
+    department_id INTEGER NOT NULL CHECK (department_id BETWEEN 1 AND 9999) REFERENCES departments(department_id)
 );";
         createEmployees.ExecuteNonQuery();
 
