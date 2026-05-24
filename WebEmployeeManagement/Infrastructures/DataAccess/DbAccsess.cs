@@ -144,6 +144,8 @@ ORDER BY e.employee_id";
 
     public static void AddEmployee(Employee employee)
     {
+        employee.EmployeeId = GetNextEmployeeId();
+
         using var connection = CreateConnection();
 
         var command = connection.CreateCommand();
@@ -158,6 +160,8 @@ VALUES (@employeeId, @employeeName, @departmentId);";
 
     public static void AddDepartment(Department department)
     {
+        department.DepartmentId = GetNextDepartmentId();
+
         using var connection = CreateConnection();
 
         var command = connection.CreateCommand();
@@ -167,5 +171,21 @@ VALUES (@departmentId, @departmentName);";
         command.Parameters.AddWithValue("departmentId", department.DepartmentId);
         command.Parameters.AddWithValue("departmentName", department.DepartmentName);
         command.ExecuteNonQuery();
+    }
+
+    private static int GetNextEmployeeId()
+    {
+        using var connection = CreateConnection();
+        using var command = connection.CreateCommand();
+        command.CommandText = "SELECT COALESCE(MAX(employee_id), 0) + 1 FROM employees";
+        return Convert.ToInt32(command.ExecuteScalar());
+    }
+
+    private static int GetNextDepartmentId()
+    {
+        using var connection = CreateConnection();
+        using var command = connection.CreateCommand();
+        command.CommandText = "SELECT COALESCE(MAX(department_id), 0) + 1 FROM departments";
+        return Convert.ToInt32(command.ExecuteScalar());
     }
 }

@@ -23,13 +23,6 @@ public class EmployeesController : Controller
     {
         if (ModelState.IsValid)
         {
-            if (DbAccsess.ExistsEmployeeId(employee.EmployeeId))
-            {
-                ViewBag.ErrorMessage = "同じ社員IDが既に存在します。";
-                SetDepartmentOptions();
-                return View(employee);
-            }
-
             if (!DbAccsess.ExistsDepartmentId(employee.DepartmentId))
             {
                 ViewBag.ErrorMessage = "指定された部署IDは存在しません。";
